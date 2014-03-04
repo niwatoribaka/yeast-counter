@@ -12,8 +12,10 @@ if dir in os.listdir(os.getcwd()):
 else:
     os.mkdir(dir)
 
-number_of_slides = int(raw_input('Number of slides? '))
-initial_coverage = 100
+number_of_slides = int(raw_input('Number of non-empty slides? '))
+initial_coverage = int(raw_input('Initial Number of yeast cells? '))
+print '\nYeast count will decrease linearly across slides\n'
+
 yeast_count = range(
                     initial_coverage,
                     - 1,
