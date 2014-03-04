@@ -1,7 +1,7 @@
 ##Yeast Counter *Group X5 2014*
 
 Uses OpenCV & pylab in an attempt to plot the coverage of yeast
-withing a testing region of the channel.
+within the testing region of the channel.
 
 Start the program using:
 ```
