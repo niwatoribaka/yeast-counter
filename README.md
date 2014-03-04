@@ -13,4 +13,3 @@ Kacper Wardega
 
 kacper@wardega.com
 
-trial
