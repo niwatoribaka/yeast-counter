@@ -14,13 +14,16 @@ else:
 
 number_of_slides = int(raw_input('Number of non-empty slides? '))
 initial_coverage = int(raw_input('Initial Number of yeast cells? '))
-print '\nYeast count will decrease linearly across slides\n'
 
 yeast_count = range(
                     initial_coverage,
                     - 1,
                     int((-1) * (float(initial_coverage) / float(number_of_slides)))
                     )
+def coverage(domain):
+    return [x**3/domain[0]**2 for x in domain]
+
+yeast_count = coverage(yeast_count)
 # ordered = True if raw_input('Ordered? (y) ') == 'y' else False
 
 for i in range(len(yeast_count)):
