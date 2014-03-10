@@ -2,10 +2,8 @@ import cv2
 from numpy import array, float32
 
 img = cv2.imread('haystack.jpg')
-img = cv2.imread('../dp2/01.JPG')
+img = cv2.imread('../dp2/02.JPG')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY).astype('float32')
-
-# gray = float32(gray)
 
 dst = cv2.cornerHarris(gray, 2, 1, .04)
 
@@ -23,7 +21,8 @@ cv2.createTrackbar('threshold', 'dst', 0, 260, lambda new: None)
 
 while True:
     drawn_over = img.__copy__()
-    drawn_over[dst > cv2.getTrackbarPos('threshold', 'dst') * dst.max() / 1000.] = [0, 0, 255]
+    drawn_over[dst > cv2.getTrackbarPos('threshold', 'dst') \
+                * dst.max() / 1000.] = [0, 0, 255]
     cv2.imshow('dst', drawn_over)
     k = cv2.waitKey(2)
     if k != -1: break
