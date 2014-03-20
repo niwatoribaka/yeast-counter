@@ -41,7 +41,7 @@
             <property name="minimum_size"></property>
             <property name="name">wizard</property>
             <property name="pos"></property>
-            <property name="size">422,250</property>
+            <property name="size">450,250</property>
             <property name="style">wxDEFAULT_DIALOG_STYLE</property>
             <property name="subclass"></property>
             <property name="title">Yeast Counter Wizard</property>
