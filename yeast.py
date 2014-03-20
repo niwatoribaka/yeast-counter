@@ -182,18 +182,23 @@ class DataPoint():
             cv2.namedWindow(self.img_names[i], cv2.WINDOW_NORMAL)
             cv2.resizeWindow(self.img_names[i], window_width, window_height)
             cv2.createTrackbar('threshold', self.img_names[i], 0, 260, lambda new: None)
+            cv2.startWindowThread()
 
             while True:
                 drawn_over = self.imgs[i].__copy__()
                 drawn_over[self.dst[i] > cv2.getTrackbarPos('threshold', self.img_names[i]) \
                             * self.dst[i].max() / 1000.] = [0, 0, 255]
                 cv2.imshow(self.img_names[i], drawn_over)
-                k = cv2.waitKey(2)
-                if k != -1:
+                k = cv2.waitKey(40)
+                if k == 27:
+                    print 'User Interrupt: exiting'
+                    exit()
+                elif k != -1:
                     self.threshold[i] = cv2.getTrackbarPos('threshold', self.img_names[i]) \
                                         * self.dst[i].max() / 1000.
                     break
-            cv2.destroyAllWindows()
+            cv2.destroyWindow(self.img_names[i])
+            cv2.waitKey(1)
     def count_yeast(self):
         for i in range(len(self.imgs)):
             mask = self.dst[i] > self.threshold[i]
@@ -241,6 +246,7 @@ class DataPoint():
                 window_height = int(self.imgs[i].shape[0] * scale)
 
                 cv2.namedWindow(self.img_names[i], cv2.WINDOW_NORMAL)
+                cv2.startWindowThread()
                 cv2.resizeWindow(self.img_names[i], window_width, window_height)
 
                 self.ix, self.iy = -1, -1
@@ -259,7 +265,8 @@ class DataPoint():
                         exit()
                     elif k == ord('n'):
                         self.stage = 0
-                        cv2.destroyAllWindows()
+                        cv2.destroyWindow(self.img_names[i])
+                        cv2.waitKey(1)
                         break
     def paramsUI(self, event, x, y, flags, param):
         '''Modifies self.drawing_overlay in response to user input
