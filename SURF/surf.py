@@ -57,6 +57,5 @@ for i, descriptor in enumerate(nrows):
     cv2.circle(opencv_needle, center, 2, color, -1)
 
 cv2.imshow('haystack', opencv_haystack)
-cv2.imshow('needle', opencv_needle)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
