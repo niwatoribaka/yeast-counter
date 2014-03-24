@@ -1,6 +1,6 @@
 import cv2
 import wx
-from settings_wizard import wizard
+from GUI.settings_wizard import wizard as settings_wizard
 import os
 import sys
 import commands
@@ -27,7 +27,7 @@ HEIGHTS = [20, 30, 40, 50]  # from lab 3 (low-flush + 3 heights)
 DP_FOLDER = None
 PREPARE_FIRST = None
 
-class Wizard(wizard):
+class SettingsWizard(settings_wizard):
     def user_exit(self, event):
         exit()
     def start_processing(self, event):
@@ -356,7 +356,7 @@ class DataPoint():
         plt.show()
 
 app = wx.App(False)
-wiz = Wizard(None)
+wiz = SettingsWizard(None)
 wiz.RunWizard(wiz.m_pages[0])
 wiz.Destroy()
 app.MainLoop()
