@@ -1,11 +1,12 @@
 import cv2
 import wx
-from GUI.settings_wizard import wizard as settings_wizard
 import os
 import sys
 import commands
 from matplotlib import pyplot as plt
 from pylab import *
+from GUI.settings_wizard import wizard as settings_wizard
+from prepare_dp import auto_prepare
 
 # TODO -> auto-prepare
 #      -> Canny edge detection for auto-rotation
@@ -361,5 +362,7 @@ wiz.RunWizard(wiz.m_pages[0])
 wiz.Destroy()
 app.MainLoop()
 
+if PREPARE_FIRST:
+    auto_prepare(DP_FOLDER)
 dp = DataPoint(DP_FOLDER)
 

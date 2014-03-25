@@ -1,8 +1,17 @@
 import cv2
 import os
+import wx
 import numpy as np
 from matplotlib import pyplot as plt
 from gi.repository import GExiv2
+from GUI.prepare_dp_wizard import wizard as prepare_dp_wizard
+
+class PrepareWizard(prepare_dp_wizard):
+    def user_exit(self, event):
+        exit()
+    def set_dir(self, event):
+        global RAW_DP_FOLDER
+        RAW_DP_FOLDER = self.dir_picker.GetPath()
 
 def rotate_image(image, angle):
     image_center = tuple(np.array(image.shape) / 2)
@@ -21,7 +30,7 @@ def auto_crop(image, sig_brightness):
     top = BIG_NUMBER
     bottom = BIG_NUMBER
     
-    check_ratio = 3
+    check_ratio = 2
 
     for y in range(len(img_HSV)):
         for x in range(len(img_HSV[y]))[:len(img_HSV[y]) / check_ratio]:
@@ -92,12 +101,11 @@ def smooth(data, iterations=1, _side=-1):
                 data[i] = data[i + _side]
     return smooth(data, iterations - 1, _side * -1)
 
-if __name__ == '__main__':
-    dir = 'DPs/raw dp3'
-    for fname in sorted(os.listdir(dir)):
+def auto_prepare(RAW_DP_FOLDER):
+    for fname in sorted(os.listdir(RAW_DP_FOLDER)):
         print '{0} :'.format(fname)
         
-        path = '{0}/{1}'.format(dir,fname)
+        path = '{0}/{1}'.format(RAW_DP_FOLDER, fname)
         
         print '\tClearing EXIF metadata'
         exif = GExiv2.Metadata(path)
@@ -112,11 +120,22 @@ if __name__ == '__main__':
         print '\tRotating'
         img = auto_rotate(img, 2.)
         
-        cv2.namedWindow('rotated', cv2.WINDOW_NORMAL)
-        cv2.resizeWindow('rotated', 800, 600)
-        cv2.startWindowThread()
-        cv2.imshow('rotated', img)
-        cv2.waitKey()
-        cv2.destroyAllWindows()
-        # cv2.imwrite('rotated {0}.png'.format(angle), img)
+#         cv2.namedWindow('rotated', cv2.WINDOW_NORMAL)
+#         cv2.resizeWindow('rotated', 800, 600)
+#         cv2.startWindowThread()
+#         cv2.imshow('rotated', img)
+#         cv2.waitKey()
+#         cv2.destroyAllWindows()
+
+        cv2.imwrite(path, img)
         
+if __name__ == '__main__':
+    RAW_DP_FOLDER = None
+    
+    app = wx.App(False)
+    wiz = PrepareWizard(None)
+    wiz.RunWizard(wiz.m_pages[0])
+    wiz.Destroy()
+    app.MainLoop()
+    
+    auto_prepare(RAW_DP_FOLDER)

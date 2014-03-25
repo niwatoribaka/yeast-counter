@@ -1,1 +1,1 @@
-__all__ = ['settings_wizard.py']
+__all__ = ['settings_wizard.py','prepare_dp_wizard']
