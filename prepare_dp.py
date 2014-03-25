@@ -1,6 +1,7 @@
 import cv2
 import os
 import wx
+import shutil
 import numpy as np
 from matplotlib import pyplot as plt
 from gi.repository import GExiv2
@@ -102,7 +103,17 @@ def smooth(data, iterations=1, _side=-1):
     return smooth(data, iterations - 1, _side * -1)
 
 def auto_prepare(RAW_DP_FOLDER):
-    for fname in sorted(os.listdir(RAW_DP_FOLDER)):
+    try:
+        os.mkdir('{0}/bak'.format(RAW_DP_FOLDER))
+    except:
+        pass
+    for fname in sorted([f for f in os.listdir(RAW_DP_FOLDER) if os.path.isfile('{0}/{1}'.format(RAW_DP_FOLDER,f))]):
+        try:
+            shutil.copy2('{0}/{1}'.format(RAW_DP_FOLDER,fname),
+                     '{0}/bak/{1}'.format(RAW_DP_FOLDER,fname))
+        except:
+            pass
+        
         print '{0} :'.format(fname)
         
         path = '{0}/{1}'.format(RAW_DP_FOLDER, fname)

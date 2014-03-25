@@ -47,7 +47,7 @@ class DataPoint():
         print 'MODE IS {0}'.format(MODE)
 
         self.dp_path = dp_path
-        self.img_names = sort(os.listdir(dp_path))
+        self.img_names = sort([f for f in os.listdir(dp_path) if os.path.isfile('{0}/{1}'.format(dp_path,f))])
 
         if not TESTING:
             assert len(HEIGHTS) == len(self.img_names)
