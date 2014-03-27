@@ -1,10 +1,10 @@
 import cv2
 import wx
 import os
-import sys
+import sys  # @UnusedImport
 import commands
-from matplotlib import pyplot as plt
-from pylab import *
+from matplotlib import pyplot as plt  # @UnusedImport
+from pylab import *  # @UnusedWildImport
 from GUI.settings_wizard import wizard as settings_wizard
 from prepare_dp import auto_prepare
 
@@ -25,6 +25,9 @@ DP_FOLDER = None
 PREPARE_FIRST = None
 
 class SettingsWizard(settings_wizard):
+    '''
+    Overrides the methods from the FormBuilder generated file.
+    '''
     def user_exit(self, event):
         exit()
     def start_processing(self, event):
@@ -144,6 +147,10 @@ class DataPoint():
 
 
     def set_threshold(self):
+        '''
+        User interface for interactively setting the threshold
+        for the corner detector.
+        '''
         global TESTING
 
         self.threshold = [0. for i in range(len(self.imgs))]

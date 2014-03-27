@@ -1,13 +1,28 @@
+'''
+prepare_dp.py contains methods necessary to automatically prepare
+a data point for use with yeast.py.  A simple GUI for selecting 
+the data point directory is included.
+
+The strategy for preparing a data point is as follows:
+    store a backup
+    remove EXIF metadata
+    crop the images
+    rotate the images
+'''
+
 import cv2
 import os
 import wx
 import shutil
 import numpy as np
-from matplotlib import pyplot as plt
-from gi.repository import GExiv2
+from matplotlib import pyplot as plt  # @UnusedImport
+from gi.repository import GExiv2  # @UnresolvedImport
 from GUI.prepare_dp_wizard import wizard as prepare_dp_wizard
 
 class PrepareWizard(prepare_dp_wizard):
+    '''
+    Overrides the methods from the FormBuilder generated file.
+    '''
     def user_exit(self, event):
         exit()
     def set_dir(self, event):
@@ -15,6 +30,9 @@ class PrepareWizard(prepare_dp_wizard):
         RAW_DP_FOLDER = self.dir_picker.GetPath()
 
 def rotate_image(image, angle):
+    '''
+    returns image rotated by angle degrees.
+    '''
     image_center = tuple(np.array(image.shape) / 2)
     if len(image_center) > 2:
         image_center = image_center[:2]
@@ -23,6 +41,14 @@ def rotate_image(image, angle):
     return result
 
 def auto_crop(image, sig_brightness):
+    '''
+    Pans across image from each direction until significant 
+    brightness is detected (i.e. light from the lens of the microscope).
+    Crops at the location of significant brigtness detected.
+    check_ratio determines how much of the image to pan over.
+    The inverse of check_ratio is the fraction of the image
+    that is panned in each direction.
+    '''
     img_HSV = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     
     BIG_NUMBER = 2 ** 32 - 1
@@ -73,6 +99,18 @@ def auto_crop(image, sig_brightness):
     return image
 
 def auto_rotate(image, sampling_factor=1.):
+    '''
+    Performs Canny edge detection on the image and then 
+    shrinks the edge mask.  The edge mask is then rotated
+    sampling_factor * 180 times.  After each rotation,
+    A vector containing the sum of each row of the image is
+    stored.  The ideology is that the angle that produces
+    a maximum value in this vector must be the horizontal
+    channel orientation, because when the channel is
+    oriented horizontally, the sum of the rows in the edge
+    mask will be maximized.  image is then rotated by
+    the calculated angle and returned.
+    '''
     edges = cv2.Canny(image, 50, 150)
     small = cv2.resize(edges, (0, 0), fx=0.2, fy=0.2)
     small = cv2.medianBlur(small, 5)
@@ -90,6 +128,11 @@ def auto_rotate(image, sampling_factor=1.):
     return image
     
 def smooth(data, iterations=1, _side=-1):
+    '''
+    Novel recursive algorithm for smoothing peaks from noisy data.
+    
+    data[i] trends to data[j] as iterations -> inf. ; i,j in [0,len(data)]
+    '''
     if iterations == 0:
         return data
     for i in range(len(data)):
@@ -103,6 +146,11 @@ def smooth(data, iterations=1, _side=-1):
     return smooth(data, iterations - 1, _side * -1)
 
 def auto_prepare(RAW_DP_FOLDER):
+    '''
+    Takes a data point and backs its images up to a 'bak' folder.
+    Removes EXIF metadata and performs auto_crop and
+    auto_rotate on all of the images.
+    '''
     try:
         os.mkdir('{0}/bak'.format(RAW_DP_FOLDER))
     except:
@@ -139,7 +187,12 @@ def auto_prepare(RAW_DP_FOLDER):
 #         cv2.destroyAllWindows()
 
         cv2.imwrite(path, img)
-        
+
+'''
+prepare_dp.py is typically called by yeast.py, but a simple
+GUI for selecting an unprepared data point will open if
+prepare_dp.py is called directly.
+'''
 if __name__ == '__main__':
     RAW_DP_FOLDER = None
     
