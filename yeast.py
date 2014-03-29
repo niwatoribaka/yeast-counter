@@ -18,7 +18,9 @@ TESTING = None
 MODE = None
 
 UNITS = 'cm'
-HEIGHTS = [30, 35, 40, 45] #experiment (low-flush + 4 heights)
+#Each height must be evenly spaced excepting the low-flush
+#HEIGHTS[-1]-HEIGHTS[0] must be a mutliple of HEIGHTS[-1]-HEIGHTS[-2]
+HEIGHTS = [30, 35, 40, 45] #experiment (low-flush + 3 heights)
 
 DP_FOLDER = None
 PREPARE_FIRST = None
