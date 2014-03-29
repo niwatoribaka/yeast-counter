@@ -1,7 +1,6 @@
 #Yeast Counter
 
-Uses OpenCV & pylab in an attempt to plot the coverage of yeast
-within the testing region of the channel.
+A program (little suite, really) that attempts to plot the coverage of yeast within the testing region of the channel.
 
 Start the program using:
 ```
