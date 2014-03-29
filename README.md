@@ -13,7 +13,7 @@ Kacper Wardega
 
 kacper@wardega.com
 
-##Installation Instructions:
+##Installation instructions:
 
 ###Linux
 
@@ -32,3 +32,11 @@ Install the following:
 * [matplotlib](http://www.lfd.uci.edu/~gohlke/pythonlibs/#matplotlib) (graphing utility)
 * [pygobject](http://sourceforge.net/projects/pygobjectwin32/files/?source=navbar) (you only need the GExiv2 wrapper.  It's labeled as libgexiv or something.  Needed to remove EXIF metadata.) 
 * [OpenCV](http://www.lfd.uci.edu/~gohlke/pythonlibs/#opencv) (image manipulation)
+
+###Mac OS X
+
+Switch to a different operating system.  Installing OpenCV properly is a pain due to Mac default configurations.  If you are determined to use the yeast counter on a Mac, refer to the section below.
+
+##Troubleshooting Errors:
+
+If you are receiving cryptic errors or are otherwise having issues, an excellent resource for tackling problems can be found [here](http://www.google.com).  If that doesn't work, I can be reached by the email given above. 
