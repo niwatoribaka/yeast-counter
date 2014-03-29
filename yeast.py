@@ -363,7 +363,8 @@ class DataPoint():
             pass
         plt.savefig('{0}/res/results.png'.format(self.dp_path))
         with open('{0}/res/results.txt'.format(self.dp_path),'w') as f:
-            f.write(str(self.significant_shear_height))
+            global MODE
+            f.write('{0}\nMODE {1}\n'.format(str(self.significant_shear_height),MODE))
 
 app = wx.App(False)
 wiz = SettingsWizard(None)
