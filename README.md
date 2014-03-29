@@ -22,7 +22,7 @@ You will almost certainly figure it out on your own.
 
 Install the following:
 * [Python 2.7](https://www.python.org/download/releases/2.7.6) 
-* [wxPython](http://www.lfd.uci.edu/~gohlke/pythonlibs/#wxpython) (python bindings for wxWidgets)
+* [wxPython](http://www.lfd.uci.edu/~gohlke/pythonlibs/#wxpython) (python binding for wxWidgets)
 * [six](http://www.lfd.uci.edu/~gohlke/pythonlibs/#six) (required by matplotlib)
 * [dateutil](http://www.lfd.uci.edu/~gohlke/pythonlibs/#python* dateutil) (required by matplotlib)
 * [pyparsing](http://www.lfd.uci.edu/~gohlke/pythonlibs/#pyparsing) (required by matplotlib)
