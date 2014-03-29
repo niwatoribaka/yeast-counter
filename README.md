@@ -36,6 +36,6 @@ Install the following:
 
 Switch to a different operating system.  Installing OpenCV properly is a pain due to Mac default configurations.  If you are determined to use the yeast counter on a Mac, refer to the section below.
 
-##Troubleshooting Errors:
+##Troubleshooting:
 
 If you are receiving cryptic errors or are otherwise having issues, an excellent resource for tackling problems can be found [here](http://www.google.com).  If that doesn't work, I can be reached by the email given above. 
