@@ -364,9 +364,9 @@ class DataPoint():
             print 'Theoretical significant shear at height {0} {1}'.format(self.significant_shear_height, UNITS)
 
         plt.ylim([-1, 2])
-        plt.xlim([HEIGHTS[0],HEIGHTS[-1]])
+        plt.xlim([HEIGHTS[0], HEIGHTS[-1]])
         
-        plt.xlabel('Image')
+        plt.xlabel('Height ({0})'.format(UNITS))
         plt.ylabel('Coverage')
         plt.title(self.dp_path.split('/')[-1])
         
