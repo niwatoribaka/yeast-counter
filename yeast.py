@@ -20,7 +20,9 @@ MODE = None
 UNITS = 'cm'
 # Each height must be evenly spaced excepting the low-flush
 # HEIGHTS[-1]-HEIGHTS[0] must be a mutliple of HEIGHTS[-1]-HEIGHTS[-2]
-HEIGHTS = [30, 35, 40, 45]  # experiment (low-flush + 3 heights)
+HEIGHTS = [20, 35, 40, 45]  # experiment (low-flush + 3 heights)
+DIFF = [HEIGHTS[x + 1] - HEIGHTS[x] for x in range(len(HEIGHTS) - 1)]
+print DIFF
 
 # Fraction of user denoted significant shear (to calculate significant
 # shear height automatically and to mark on line plot).
@@ -345,23 +347,25 @@ class DataPoint():
         self.x_significant_shear = (self.significant_shear - self.data[left_bound]) * \
                                 (1. / (self.data[left_bound + 1] - self.data[left_bound])) + left_bound
         global HEIGHTS
-        self.significant_shear_height = HEIGHTS[0] + (HEIGHTS[-1] - HEIGHTS[0]) \
-                                        * (self.x_significant_shear) / \
-                                        ((HEIGHTS[-1] - HEIGHTS[0]) / (HEIGHTS[-1] - HEIGHTS[-2]))
+        left = int(floor(self.x_significant_shear))
+        right = int(ceil(self.x_significant_shear))
+        self.significant_shear_height = HEIGHTS[left] + DIFF[left] * (self.x_significant_shear - floor(self.x_significant_shear))
     def plot(self):
-        global TESTING, UNITS
+        global TESTING, UNITS, HEIGHTS
         '''Prepares the data using self.prepare_data and then
         graphs the data on a plot.'''
         self.prepare_data()
 
-        plt.plot(range(len(self.data)), self.data)
-        plt.hlines(self.significant_shear, 0, len(self.data))
-        plt.vlines(self.x_significant_shear, -1, 2)
+        plt.plot(HEIGHTS, self.data)
+        plt.hlines(self.significant_shear, 0, HEIGHTS[-1])
+        plt.vlines(self.significant_shear_height, -1, 2)
         print 'Significant shear at image {0}'.format(self.x_significant_shear)
         if not TESTING:
             print 'Theoretical significant shear at height {0} {1}'.format(self.significant_shear_height, UNITS)
 
         plt.ylim([-1, 2])
+        plt.xlim([HEIGHTS[0],HEIGHTS[-1]])
+        
         plt.xlabel('Image')
         plt.ylabel('Coverage')
         plt.title(self.dp_path.split('/')[-1])
