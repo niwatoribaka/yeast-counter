@@ -22,7 +22,6 @@ UNITS = 'cm'
 # HEIGHTS[-1]-HEIGHTS[0] must be a mutliple of HEIGHTS[-1]-HEIGHTS[-2]
 HEIGHTS = [20, 35, 40, 45]  # experiment (low-flush + 3 heights)
 DIFF = [HEIGHTS[x + 1] - HEIGHTS[x] for x in range(len(HEIGHTS) - 1)]
-print DIFF
 
 # Fraction of user denoted significant shear (to calculate significant
 # shear height automatically and to mark on line plot).
