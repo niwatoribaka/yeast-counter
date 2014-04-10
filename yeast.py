@@ -378,13 +378,14 @@ class DataPoint():
             global MODE
             f.write('{0}\nMODE {1}\n'.format(str(self.significant_shear_height), MODE))
 
-app = wx.App(False)
-wiz = SettingsWizard(None)
-wiz.RunWizard(wiz.m_pages[0])
-wiz.Destroy()
-app.MainLoop()
-
-if PREPARE_FIRST:
-    auto_prepare(DP_FOLDER)
-dp = DataPoint(DP_FOLDER)
+if __name__=='__main__':
+    app = wx.App(False)
+    wiz = SettingsWizard(None)
+    wiz.RunWizard(wiz.m_pages[0])
+    wiz.Destroy()
+    app.MainLoop()
+    
+    if PREPARE_FIRST:
+        auto_prepare(DP_FOLDER)
+    dp = DataPoint(DP_FOLDER)
 
